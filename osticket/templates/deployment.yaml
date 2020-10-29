@@ -52,18 +52,44 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.mariadb.repository }}:{{ .Values.mariadb.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.mariadb.pullPolicy }}
+          env:          
+          - name: "MYSQL_ROOT_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                key:  MYSQL_ROOT_PASSWORD
+                name: "{{ .Values.env }}"
+          - name: "MYSQL_USER"
+            valueFrom:
+              secretKeyRef:
+                key:  MYSQL_USER
+                name: "{{ .Values.env }}"
+          - name: "MYSQL_PASSWORD"
+            valueFrom:
+              secretKeyRef:
+                key:  MYSQL_PASSWORD
+                name: "{{ .Values.env }}"
+          - name: "MYSQL_DATABASE"
+            valueFrom:
+              secretKeyRef:
+                key:  MYSQL_DATBASE
+                name: "{{ .Values.env }}"
           ports:
             - name: mariadb
               containerPort: 3306
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
+            exec:
+              command: ["mysqladmin", "ping"]
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
           readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            exec:
+              # Check we can execute queries over TCP (skip-networking is off).
+              command: ["mysql", "-h", "127.0.0.1", "-e", "SELECT 1"]
+            initialDelaySeconds: 5
+            periodSeconds: 2
+            timeoutSeconds: 1
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

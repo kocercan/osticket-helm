@@ -15,6 +15,12 @@ mariadb:
   pullPolicy: IfNotPresent
   tag: ""
 
+env:
+  MYSQL_ROOT_PASSWORD: "secret"
+  MYSQL_USER: "osticket"
+  MYSQL_PASSWORD "secret"
+  MYSQL_DATABASE: "osticket"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
@@ -44,6 +50,10 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+
+mariadbservice:
+  type: ClusterIP
+  port: 3306
 
 ingress:
   enabled: false
