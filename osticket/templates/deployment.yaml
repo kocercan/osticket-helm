@@ -57,22 +57,22 @@ spec:
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_ROOT_PASSWORD
-                name: "{{ .Values.env }}"
+                name: "{{ .Values.env.MYSQL_ROOT_PASSWORD }}"
           - name: "MYSQL_USER"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_USER
-                name: "{{ .Values.env }}"
+                name: "{{ .Values.env.MYSQL_USER }}"
           - name: "MYSQL_PASSWORD"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_PASSWORD
-                name: "{{ .Values.env }}"
+                name: "{{ .Values.env.MYSQL_PASSWORD }}"
           - name: "MYSQL_DATABASE"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_DATBASE
-                name: "{{ .Values.env }}"
+                name: "{{ .Values.env.MYSQL_DATABASE }}"
           ports:
             - name: mariadb
               containerPort: 3306
