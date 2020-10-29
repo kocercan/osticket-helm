@@ -18,7 +18,7 @@ mariadb:
 env:
   MYSQL_ROOT_PASSWORD: "secret"
   MYSQL_USER: "osticket"
-  MYSQL_PASSWORD "secret"
+  MYSQL_PASSWORD: "secret"
   MYSQL_DATABASE: "osticket"
 
 imagePullSecrets: []
