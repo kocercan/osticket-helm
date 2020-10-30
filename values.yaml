@@ -18,6 +18,17 @@ mariadb:
     repository: mariadb
     pullPolicy: IfNotPresent
     tag: ""
+  persistence:
+    # Enable persistence for the DB
+    enabled: true
+    accessMode: "ReadWriteOnce"
+    size: 2Gi
+    storageClass: default
+    # If defined, storageClassName: <storageClass>
+    # If set to "-", storageClassName: "", which disables dynamic provisioning
+    # If undefined (the default) or set to null, no storageClassName spec is
+    # set, choosing 'standard' storage class available with the default provisioner
+    # storageClass: "-"
   service:
     port: 3306
   env:

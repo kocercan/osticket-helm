@@ -52,6 +52,9 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.mariadb.image.repository }}"
           imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
+          volumeMounts:
+          - name: "{{ .Chart.Name }}-mariadb-storage"
+            mountPath: "/k3s-storage/{{ .Chart.Name }}-mariadb"
           env:          
           - name: "MYSQL_ROOT_PASSWORD"
             valueFrom:
@@ -90,6 +93,10 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 2
             timeoutSeconds: 1
+          volumes:
+          - name: "{{ .Chart.Name }}-mariadb-storage"
+            persistentVolumeClaim:
+            claimName: "{{ .Chart.Name }}-mariadb-pvc"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
