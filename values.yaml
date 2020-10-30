@@ -4,22 +4,27 @@
 
 replicaCount: 1
 
-image:
-  repository: osticket
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+osticket:
+  image:
+    repository: osticket
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+  service:
+    port: 80
 
 mariadb:
-  repository: mariadb
-  pullPolicy: IfNotPresent
-  tag: ""
-
-env:
-  MYSQL_ROOT_PASSWORD: "secret"
-  MYSQL_USER: "osticket"
-  MYSQL_PASSWORD: "secret"
-  MYSQL_DATABASE: "osticket"
+  image:
+    repository: mariadb
+    pullPolicy: IfNotPresent
+    tag: ""
+  service:
+    port: 3306
+  env:
+    MYSQL_ROOT_PASSWORD: "secret"
+    MYSQL_USER: "osticket"
+    MYSQL_PASSWORD: "secret"
+    MYSQL_DATABASE: "osticket"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -49,11 +54,6 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
-
-mariadbservice:
-  type: ClusterIP
-  port: 3306
 
 ingress:
   enabled: false
@@ -61,7 +61,7 @@ ingress:
     # kubernetes.io/ingress.class: osticket
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: chart-example.local
+    - host: osticket.local
       paths: []
   tls: []
   #  - secretName: chart-example-tls

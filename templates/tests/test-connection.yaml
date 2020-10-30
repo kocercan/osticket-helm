@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "osticket.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "osticket.fullname" . }}:{{ .Values.osticket.service.port }}']
   restartPolicy: Never

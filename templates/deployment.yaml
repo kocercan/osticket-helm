@@ -31,8 +31,8 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.osticket.image.repository }}"
+          imagePullPolicy: {{ .Values.osticket.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80
@@ -50,29 +50,29 @@ spec:
         - name: "{{ .Chart.Name }}-mariadb"
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.mariadb.repository }}"
-          imagePullPolicy: {{ .Values.mariadb.pullPolicy }}
+          image: "{{ .Values.mariadb.image.repository }}"
+          imagePullPolicy: {{ .Values.mariadb.image.pullPolicy }}
           env:          
           - name: "MYSQL_ROOT_PASSWORD"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_ROOT_PASSWORD
-                name: "{{ .Values.env.MYSQL_ROOT_PASSWORD }}"
+                name: "{{ .Values.mariadb.env.MYSQL_ROOT_PASSWORD }}"
           - name: "MYSQL_USER"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_USER
-                name: "{{ .Values.env.MYSQL_USER }}"
+                name: "{{ .Values.mariadb.env.MYSQL_USER }}"
           - name: "MYSQL_PASSWORD"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_PASSWORD
-                name: "{{ .Values.env.MYSQL_PASSWORD }}"
+                name: "{{ .Values.mariadb.env.MYSQL_PASSWORD }}"
           - name: "MYSQL_DATABASE"
             valueFrom:
               secretKeyRef:
                 key:  MYSQL_DATBASE
-                name: "{{ .Values.env.MYSQL_DATABASE }}"
+                name: "{{ .Values.mariadb.env.MYSQL_DATABASE }}"
           ports:
             - name: mariadb
               containerPort: 3306
