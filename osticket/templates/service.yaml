@@ -11,5 +11,10 @@ spec:
       targetPort: http
       protocol: TCP
       name: http
+  ports:
+    - port: {{ .Values.mariadbservice.port }}
+      targetPort: mariadb
+      protocol: TCP
+      name: mariadb
   selector:
     {{- include "osticket.selectorLabels" . | nindent 4 }}
