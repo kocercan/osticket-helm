@@ -1,4 +1,4 @@
-apiVersion: v2
+apiVersion: v1
 name: osticket
 description: An OSTicket Helm chart for Kubernetes
 
